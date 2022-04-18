@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.java.boot3.board.BoardMapper">
+	<insert id="setFileAdd" parameterType="BoardFilesVO">
+		INSERT INTO BOARDFILES (FILENUM, NUM, FILENAME, ORINAME)
+		VALUES (NULL, #{num}, #{fileName}, #{oriName})
+	</insert>
+	
+	<delete id="setFileDelete" parameterType="BoardFilesVO">
+		DELETE FROM BOARDFILES WHERE FILENUM=#{fileNum}
+	</delete>
+	
+	<select id="getFileDetail" resultType="BoardFilesVO" parameterType="BoardFilesVO">
+		SELECT * FROM BOARDFILES WHERE FILENUM=#{fileNum}
+	</select>
+	
+	<select id="getFileList" resultType="BoardFilesVO">
+		SELECT * FROM BOARDFILES
+	</select>
+	
+	<select id="getDetail" parameterType="BoardVO" resultType="BoardVO">
+		SELECT * FROM BOARD WHERE NUM=#{num}
+	</select>
+	
+	<select id="getList" parameterType="Pager" resultType="BoardVO">
+		SELECT * FROM BOARD
+		WHERE NUM > 0
+		AND
+		<choose>
+			<when test="kind=='col1'">TITLE</when>
+			<when test="kind=='col2'">CONTENTS</when>
+			<otherwise>WRITER</otherwise>
+		</choose>
+		LIKE CONCAT('%',#{search},'%')
+		ORDER BY NUM DESC
+		LIMIT #{startRow}, #{perPage}
+	</select>
+	
+	<insert id="setAdd" parameterType="BoardVO">
+		INSERT INTO BOARD (NUM, TITLE, WRITER, CONTENTS, HIT, REGDATE, `REF` , STEP, `DEPTH`, CATEGORY)
+		VALUES (NULL, #{title}, #{writer}, #{contents}, 0, now(), 0, 0, 0, 1)
+	</insert>
+	
+	<update id="setUpdate" parameterType="BoardVO">
+		UPDATE BOARD SET TITLE=#{title}, CONTENTS=#{contents} WHERE NUM=#{num}
+	</update>
+	
+	<delete id="setDelete" parameterType="BoardVO">
+		DELETE FROM BOARD WHERE NUM=#{num}
+	</delete>
+</mapper>
