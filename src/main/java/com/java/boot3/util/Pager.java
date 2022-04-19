@@ -16,11 +16,52 @@ public class Pager {
 	private String kind;
 	private String search;
 	
+	private Long startNum;
+	private Long lastNum;
+	private boolean pre;
+	private boolean next;
+	
 	public void makeRow() {
 		//pn : 1, perPage : 10, startRow : 0
 		//pn : 2, perPage : 10, startRow : 10
 		//pn : 3, perPage : 10, startRow : 20
 		this.startRow = (this.getPn() - 1) * this.getPerPage();
+	}
+	
+	public void makeNum(Long totalCount) {
+		Long totalPage = totalCount/this.getPerPage();
+		if(totalCount%this.getPerPage() != 0) {
+			totalPage++;
+		}
+		
+		Long perBlock=5L;
+		Long totalBlock = totalPage/perBlock;
+		if(totalPage%perBlock != 0) {
+			totalBlock++;
+		}
+		
+		Long curBlock = this.getPn()/perBlock;
+		if(this.getPn()%perBlock != 0) {
+			curBlock++;
+		}
+		
+		this.startNum = (curBlock-1) * perBlock + 1;
+		this.lastNum = curBlock * perBlock;
+		
+		this.pre=false;
+		if(curBlock > 1) {
+			this.pre=true;
+		}
+		
+		this.next=false;
+		if(totalBlock > curBlock) {
+			this.next=true;
+		}
+		
+		if(curBlock == totalBlock) {
+			this.lastNum=totalPage;
+		}
+		
 	}
 	
 	public String getSearch() {

@@ -39,7 +39,6 @@
 				</div>
 			</div>
 		</form>
-	</div>
 	
 		<table class="table table-striped table-hover">
 			<colgroup>
@@ -68,9 +67,41 @@
 				</tr>
 			</c:forEach>
 		</table>
-	</div>
-	<div class="row justify-content-end">
-		<a href="./add" class="col-1 btn btn-outline-primary">WRITE</a>
+		<div class="row justify-content-between">
+			<div class="col-3">
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination">
+				    <li class="page-item">
+				      <a class="page-link" href="./list?pn=${pager.pre?pager.startNum-1:1}&kind=${pager.kind}&search=${pager.search}" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				    <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
+				    	<c:choose>
+				    		<c:when test="${pager.pn eq i}">
+				    			<li class="page-item active" aria-current="page">
+							      <a class="page-link" href="./list?pn=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a>
+							    </li>
+				    		</c:when>
+				    		<c:otherwise>
+				    			<li class="page-item"><a class="page-link" href="./list?pn=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
+				    		</c:otherwise>
+				    	</c:choose>
+				    </c:forEach>
+				    <li class="page-item">
+				      <a class="page-link" href="./list?pn=${pager.next?pager.lastNum+1:pager.lastNum}&kind=${pager.kind}&search=${pager.search}" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			</div>
+			<div class="col-9">
+				<div class="row justify-content-end">
+					<a href="./add" class="col-1 btn btn-outline-primary">WRITE</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
