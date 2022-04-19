@@ -17,31 +17,28 @@
 <c:import url="../temp/header.jsp"></c:import>
 
 <div class="container mt-5">
-	<form action="./add" method="post" enctype="multipart/form-data">
+	<form action="./update" method="post">
+		<input type="hidden" name="num" value="${vo.num}">
 		<div class="row">
 			<div class="alert alert-primary" role="alert">
 			 	<h4 style="text-transform: capitalize;">${board} Add</h4>
 			</div>
 			<div class="input-group mb-3">
 			  <span class="input-group-text" id="basic-addon1">글 제목</span>
-			  <input type="text" name="title" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+			  <input type="text" name="title" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1" value="${vo.title}">
 			  <span class="input-group-text" id="basic-addon1">작성자</span>
-			  <input type="text" name="writer" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+			  <input type="text" name="writer" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="${vo.writer}" readonly="readonly">
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-group">
 			  <span class="input-group-text">글 내용</span>
-			  <textarea name="contents" class="form-control" aria-label="With textarea"></textarea>
+			  <textarea name="contents" class="form-control" aria-label="With textarea">${vo.contents}</textarea>
 			</div>
 		</div>
 		<div class="row">
-			<input type="file" class="form-control" name="files">
-			<input type="file" class="form-control" name="files">
-		</div>
-		<div class="row">
 			<div class="row justify-content-end">
-				<button type="submit" class="col-1 btn btn-outline-primary">WRITE</button>
+				<button type="submit" class="col-1 btn btn-outline-primary">수정</button>
 			</div>
 		</div>
 	</form>

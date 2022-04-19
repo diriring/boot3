@@ -21,9 +21,29 @@
 		SELECT * FROM BOARDFILES
 	</select>
 	
-	<select id="getDetail" parameterType="BoardVO" resultType="BoardVO">
-		SELECT * FROM BOARD WHERE NUM=#{num}
+	<select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
+		SELECT B.*, BF.* FROM BOARD B
+		LEFT JOIN BOARDFILES BF
+		ON B.NUM = BF.NUM
+		WHERE B.NUM=#{num}
 	</select>
+	<resultMap type="BoardVO" id="getDetailResult">
+		<id column="num" property="num"/>
+		<result column="title" property="title"/>
+		<result column="contents" property="contents"/>
+		<result column="writer" property="writer"/>
+		<result column="regDate" property="regDate"/>
+		<result column="hit" property="hit"/>
+		<result column="ref" property="ref"/>
+		<result column="step" property="step"/>
+		<result column="depth" property="depth"/>
+		<result column="category" property="category"/>
+		<collection property="filesVOs" javaType="java.util.List" ofType="BoardFilesVO">
+			<id column="fileNum" property="fileNum"/>
+			<result column="fileName" property="fileName"/>
+			<result column="oriName" property="oriName"/>
+		</collection>
+	</resultMap>
 	
 	<select id="getList" parameterType="Pager" resultType="BoardVO">
 		SELECT * FROM BOARD
@@ -39,7 +59,7 @@
 		LIMIT #{startRow}, #{perPage}
 	</select>
 	
-	<insert id="setAdd" parameterType="BoardVO">
+	<insert id="setAdd" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="num">
 		INSERT INTO BOARD (NUM, TITLE, WRITER, CONTENTS, HIT, REGDATE, `REF` , STEP, `DEPTH`, CATEGORY)
 		VALUES (NULL, #{title}, #{writer}, #{contents}, 0, now(), 0, 0, 0, 1)
 	</insert>
