@@ -8,5 +8,7 @@
 			<typeAlias type="com.java.boot3.board.BoardVO" alias="BoardVO"/>
 			<typeAlias type="com.java.boot3.board.BoardFilesVO" alias="BoardFilesVO"/>
 			<typeAlias type="com.java.boot3.util.Pager" alias="Pager"/>
+			<typeAlias type="com.java.boot3.member.MemberVO" alias="MemberVO"/>
+			<typeAlias type="com.java.boot3.member.MemberFilesVO" alias="MemberFilesVO"/>
 		</typeAliases>
 	</configuration>

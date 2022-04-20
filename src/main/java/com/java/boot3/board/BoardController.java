@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,11 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@ModelAttribute("board")
+	public String getBoard() {
+		return "board";
+	}
 	
 	@GetMapping("list")
 	public ModelAndView getList(Pager pager) throws Exception {
@@ -76,5 +82,16 @@ public class BoardController {
 		return "redirect:./list";
 	}
 	
+	@GetMapping("fileDown")
+	public ModelAndView getFileDown(BoardFilesVO boardFilesVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		boardFilesVO = boardService.getFileDetail(boardFilesVO);
+		
+		//fileDown 클래스에서 fileVO로 꺼낼 수 있도록 이름은 꼭 fileVO로
+		mv.addObject("fileVO", boardFilesVO);
+		//Bean(클래스) 이름과 동일하게
+		mv.setViewName("fileDown");
+		return mv;
+	}
 
 }

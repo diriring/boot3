@@ -32,9 +32,11 @@
 		</tr>
 		<tr>
 			<td colspan="3">
-				<c:forEach items="${vo.filesVOs}" var="f">
-					${f.fileName}
-				</c:forEach>
+				<ul class="list-group">
+					<c:forEach items="${vo.filesVOs}" var="f">
+						<li class="list-group-item"><a href="./fileDown?fileNum=${f.fileNum}">${f.oriName}</a></li>
+					</c:forEach>
+				</ul>
 			</td>
 		</tr>
 	</table>

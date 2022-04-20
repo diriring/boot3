@@ -1,4 +1,4 @@
-package com.java.boot3.board;
+package com.java.boot3.member;
 
 import com.java.boot3.util.FileVO;
 
@@ -7,8 +7,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class BoardFilesVO extends FileVO{
+public class MemberFilesVO extends FileVO {
 	
-	private Long num;
+	private String id;
 	
 }
