@@ -4,12 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <c:import url="../temp/header_script.jsp"></c:import>
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -28,16 +29,20 @@
 			 	<h4 style="text-transform: capitalize;">${board} Add</h4>
 			</div>
 			<div class="input-group mb-3">
-			  <span class="input-group-text" id="basic-addon1">글 제목</span>
-			  <input type="text" name="title" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
-			  <span class="input-group-text" id="basic-addon1">작성자</span>
-			  <input type="text" name="writer" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+			  <span class="input-group-text" id="basic-addon1">상품명</span>
+			  <input type="text" name="productName" class="form-control" placeholder="상품명">
 			</div>
-		</div>
-		<div class="row">
-			<div class="input-group">
-			  <span class="input-group-text">글 내용</span>
-			  <textarea name="contents" class="form-control" aria-label="With textarea" id="contents"></textarea>
+			<div class="input-group mb-3">
+			  <span class="input-group-text" id="basic-addon1">가격</span>
+			  <input type="text" name="productPrice" class="form-control" placeholder="가격">
+			</div>
+			<div class="input-group mb-3">
+			  <span class="input-group-text" id="basic-addon1">수량</span>
+			  <input type="text" name="productCount" class="form-control" placeholder="수량">
+			</div>
+			<div class="input-group mb-3">
+			  <span class="input-group-text" id="basic-addon1">상세설명</span>
+			  <textarea class="form-control" id="productDetail" name="productDetail"></textarea>
 			</div>
 		</div>
 		<button id="fileAdd" type="button" class="btn btn-dark my-4">FileADD</button>
@@ -46,15 +51,14 @@
 			<!-- <input type="file" class="form-control" name="files">
 			<input type="file" class="form-control" name="files"> -->
 		</div>
-		<button type="submit" class="btn btn-outline-primary my-4">WRITE</button>
+		<button type="submit" class="btn btn-outline-primary my-4">INSERT</button>
 	</form>
 </div>
 
 <script type="text/javascript">
-	$("#contents").summernote({
+	$("#productDetail").summernote({
 		height: 400
 	});
-
 
 	let count = 0;
 	$("#fileAdd").click(function() {

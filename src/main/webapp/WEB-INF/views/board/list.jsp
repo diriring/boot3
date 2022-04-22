@@ -97,8 +97,8 @@
 				</nav>
 			</div>
 			<div class="col-9">
-				<div class="row justify-content-end">
-					<a href="./add" class="col-1 btn btn-outline-primary">WRITE</a>
+				<div class="d-grid  justify-content-end">
+					<a href="./add" class="btn btn-outline-primary">WRITE</a>
 				</div>
 			</div>
 		</div>

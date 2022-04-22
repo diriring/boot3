@@ -26,23 +26,27 @@ public class BoardService {
 	public int setAdd(BoardVO boardVO, MultipartFile [] files) throws Exception {
 		int result = boardMapper.setAdd(boardVO);
 		
-		for(MultipartFile mf : files) {
+		if(files != null) {
+			for(MultipartFile mf : files) {
 			
-			if(mf.isEmpty()) {
-				continue;
+				if(mf.isEmpty()) {
+					continue;
+				}
+				
+				// File을 HDD에 저장
+				String fileName = fileManager.fileSave(mf, "resources/upload/board/");
+				System.out.println(fileName);
+				// 저장된 정보를 DB에 저장
+				BoardFilesVO boardFilesVO = new BoardFilesVO();
+				boardFilesVO.setNum(boardVO.getNum());
+				boardFilesVO.setFileName(fileName);
+				boardFilesVO.setOriName(mf.getOriginalFilename());
+				
+				boardMapper.setFileAdd(boardFilesVO);
 			}
-			
-			// File을 HDD에 저장
-			String fileName = fileManager.fileSave(mf, "resources/upload/board/");
-			System.out.println(fileName);
-			// 저장된 정보를 DB에 저장
-			BoardFilesVO boardFilesVO = new BoardFilesVO();
-			boardFilesVO.setNum(boardVO.getNum());
-			boardFilesVO.setFileName(fileName);
-			boardFilesVO.setOriName(mf.getOriginalFilename());
-			
-			boardMapper.setFileAdd(boardFilesVO);
 		}
+		
+		
 		
 		return  result;
 	}

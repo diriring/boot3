@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.java.boot3.product.ProductMapper">
+	<select id="getList" parameterType="Pager" resultMap="ListResult">
+		SELECT P.*, PF.* FROM
+			(SELECT * FROM PRODUCT WHERE PRODUCTNUM > 0 AND
+			<choose>
+				<when test="kind=='col1'">PRODUCTNAME</when>
+				<otherwise>PRODUCTDETAIL</otherwise>
+			</choose>
+			LIKE CONCAT('%',#{search},'%')
+			ORDER BY PRODUCTNUM DESC LIMIT 0, 9) P
+		LEFT JOIN PRODUCTFILES PF
+		USING (PRODUCTNUM)
+	</select>
+	<resultMap type="ProductVO" id="ListResult">
+		<id column="productNum" property="productNum"/>
+		<result column="productName" property="productName"/>
+		<result column="productPrice" property="productPrice"/>
+		<result column="productCount" property="productCount"/>
+		<result column="productDetail" property="productDetail"/>
+		<collection property="productFilesVO" javaType="java.util.List" ofType="ProductFilesVO">
+			<id column="fileNum" property="fileNum"/>
+			<result column="fileName" property="fileName"/>
+			<result column="oriName" property="oriName"/>
+		</collection>
+	</resultMap>
+	
+	<insert id="setAdd" parameterType="ProductVO" useGeneratedKeys="true" keyProperty="productNum">
+		INSERT INTO PRODUCT
+		(PRODUCTNUM, PRODUCTNAME, PRODUCTPRICE, PRODUCTCOUNT, PRODUCTDETAIL)
+		VALUES (NULL, #{productName}, #{productPrice}, #{productCount}, #{productDetail})
+	</insert>
+	
+	<insert id="setFileAdd" parameterType="ProductFilesVO">
+		INSERT INTO PRODUCTFILES (FILENUM, PRODUCTNUM, FILENAME, ORINAME)
+		VALUES (NULL, #{productNum}, #{fileName}, #{oriName})
+	</insert>
+	
+	<select id="totalCount" parameterType="Pager" resultType="Long">
+		SELECT COUNT(PRODUCTNUM) FROM PRODUCT
+		WHERE PRODUCTNUM > 0 AND
+		<choose>
+			<when test="kind=='col1'">PRODUCTNAME</when>
+			<otherwise>PRODUCTDETAIL</otherwise>
+		</choose>
+		LIKE CONCAT('%',#{search},'%')
+	</select>
+</mapper>
