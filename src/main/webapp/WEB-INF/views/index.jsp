@@ -45,70 +45,61 @@
 	</div>
 	
 	<div class="container">
-		<input type="text" id="d1">
-		<button id="btn">CLICK</button>
-		<button id="btn2">CLICK2</button>
-		<input type="checkbox" name="ch" class="ch" value="1">
-		<input type="checkbox" name="ch" class="ch" value="2">
-		<input type="checkbox" name="ch" class="ch" value="3">
-		<input type="checkbox" name="ch" class="ch" value="4">
-		<button id="btn3">CLICK3</button>
-		<div id="result">
-			
-		</div>
+		<input type="text" id="v1">
+		
+		<input type="checkbox" class="num" name="num" value="a">
+		<input type="checkbox" class="num" name="num" value="b">
+		<input type="checkbox" class="num" name="num" value="c">
+		<input type="checkbox" class="num" name="num" value="d">
+		
+		<button id="btn1">GET</button>
+		<button id="btn2">POST</button>
+		<button id="btn3">AJAX</button>
 	</div>
 	
 	<c:import url="./temp/header_script.jsp"></c:import>
 	
 	<script type="text/javascript">
-		/* const ch = document.getElementsByClassName("ch");
-		for(c of ch) {
-			c.addEventListener("click", function() {
-				alert(this.value);
-			})
-		}; */
-		
-		/* $(".ch").click(function() {
-			console.log(this.value);
-		}); */
-		
-		/* $(".ch").on({
-			click: function() {
-				console.log("click");
-			},
-			change: function () {
-				console.log("change");
-			}
-		}); */
-		
-		$(".ch").click(function(e) {
-			/* let v = $(this).val();
-			console.log(v); */
-			let c = $(this).prop("checked");
-			this.checked;
-			console.log(c);
-			$(".ch".prop("checked", true));
+		$("#btn1").click(function() {
+			let v = $("#v1").val();
+			console.log(v);
+			$.get("./getTest?msg="+v, function(data) {
+				console.log("응답 완료");
+				console.log(data.trim());
+			});
 		});
 		
-		$(".ch").change(function() {
-			console.log("change Test")
+		$("#btn2").click(function() {
+			$.post("./postTest", {msg: $("#v1").val()},function(result) {
+				console.log(result.trim());
+			});
 		});
 		
-		$('#btn').on("click", function(){
-			console.log($("#d1").val()); 
+		$("#btn3").click(function() {
+			let ar = [];
+			$(".num").each(function(idx, item) {
+		 		if($(item).prop("checked")) {
+		 			ar.push($(item).val());
+		 		}
+		 	});
+			
+			let v = $("#v1").val();
+			$.ajax({
+				type: "POST",
+				url: "./arrayTest",
+				traditional: true,
+				data: {
+					msg: v,
+					numbers: ar
+				},
+				success: function(d) {
+					console.log(d.trim());	
+				},
+				error: function() {
+					alert("error");
+				}
+			});
 		});
-		
-		$("#btn2").click(function () {
-			$('.ch').each(function(idx, item) {
-				console.log("Index : ", idx);
-				console.log("Item : ", item);
-				console.log("Value : ", $(item).val())
-			})
-		});
-		
-		$("#btn3").click(function () {
-			$("#result").append('<input type="checkbox" name="ch" class="ch" value="1">');
-		})
 	</script>
 </body>
 </html>

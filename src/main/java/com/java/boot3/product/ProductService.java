@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.java.boot3.board.BoardFilesVO;
 import com.java.boot3.util.FileManager;
 import com.java.boot3.util.Pager;
 
@@ -19,9 +18,9 @@ public class ProductService {
 	private FileManager fileManager;
 	
 	public List<ProductVO> getList(Pager pager) throws Exception {
-		pager.setPerPage(9);
 		pager.makeRow();
 		pager.makeNum(productMapper.totalCount(pager));
+		System.out.println("Service : " + pager.getStartRow());
 		List<ProductVO> ar = productMapper.getList(pager);
 		
 		return ar;

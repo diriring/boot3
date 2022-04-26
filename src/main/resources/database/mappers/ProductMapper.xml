@@ -12,7 +12,7 @@
 				<otherwise>PRODUCTDETAIL</otherwise>
 			</choose>
 			LIKE CONCAT('%',#{search},'%')
-			ORDER BY PRODUCTNUM DESC LIMIT 0, 9) P
+			ORDER BY PRODUCTNUM DESC LIMIT #{startRow}, #{perPage}) P
 		LEFT JOIN PRODUCTFILES PF
 		USING (PRODUCTNUM)
 	</select>
