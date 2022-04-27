@@ -16,11 +16,23 @@
 		VALUES (#{id}, #{pw}, #{name}, #{email}, #{phone})
 	</insert>
 	
-	<select id="getLogin" parameterType="MemberVO" resultType="MemberVO">
-		SELECT ID, NAME FROM MEMBER
+	<select id="getLogin" parameterType="MemberVO" resultMap="LoginResult">
+		SELECT M.ID, M.NAME, R.ROLENAME
+		FROM MEMBER M
+		LEFT JOIN MEMBERROLE MR
+		USING (ID)
+		LEFT JOIN ROLE R
+		USING (ROLEID)
 		WHERE ID=#{id} AND PW=#{pw}
 	</select>
-	
+	<resultMap type="MemberVO" id="LoginResult">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<collection property="roleVOs" javaType="List" ofType="RoleVO">
+			<result column="roleId" property="roleId"/>
+			<result column="roleName" property="roleName"/>
+		</collection>
+	</resultMap>
 	<select id="getDetail" parameterType="MemberVO" resultMap="DetailResult">
 		SELECT M.ID, M.NAME, M.EMAIL, M.PHONE, MF.*
 		FROM MEMBER M
@@ -50,8 +62,11 @@
 		DELETE FROM MEMBER WHERE ID=#{id}
 	</delete>
 	
-	<insert id="setMemberRole" parameterType="MemberVO">
+	<insert id="setMemberRole" parameterType="Map">
 		INSERT INTO MEMBERROLE (ID, ROLEID)
-		VALUES (#{id}, 1)
+		VALUES (
+		#{id}, 
+		(SELECT ROLEID FROM ROLE WHERE ROLENAME = #{roleName})
+		)
 	</insert>
 </mapper>

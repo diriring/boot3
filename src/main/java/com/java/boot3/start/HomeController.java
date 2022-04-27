@@ -1,11 +1,15 @@
 package com.java.boot3.start;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.java.boot3.aop.TransferService;
+import com.java.boot3.member.MemberVO;
 
 @Controller
 public class HomeController {
@@ -14,8 +18,7 @@ public class HomeController {
 	private TransferService transferService;
 	
 	@GetMapping("/")
-	public String index() {
-		transferService.go();
+	public String index(HttpSession session) {
 		return "index";
 	}
 	

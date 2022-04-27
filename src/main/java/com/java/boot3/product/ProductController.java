@@ -64,5 +64,13 @@ public class ProductController {
 		
 		return mv;
 	}
+	
+	@GetMapping("manage")
+	public ModelAndView manage() throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("product/manage");
+		return mv;
+	}
 
 }

@@ -43,7 +43,14 @@
 		  </button>
 		</div>
 	</div>
-	
+	<div class="container">
+		<c:if test="${not empty member}">
+			<c:forEach items="${member.roleVOs}" var="role">
+				${role.roleName}
+			</c:forEach>
+		</c:if>
+		
+	</div>
 	<div class="container">
 		<input type="text" id="v1">
 		
