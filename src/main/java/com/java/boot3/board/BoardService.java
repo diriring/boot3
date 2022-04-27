@@ -1,15 +1,19 @@
 package com.java.boot3.board;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.java.boot3.member.MemberFilesVO;
 import com.java.boot3.util.FileManager;
 import com.java.boot3.util.Pager;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class BoardService {
 	
 	@Autowired
@@ -26,7 +30,7 @@ public class BoardService {
 	public int setAdd(BoardVO boardVO, MultipartFile [] files) throws Exception {
 		int result = boardMapper.setAdd(boardVO);
 		
-		if(files != null) {
+		if(files != null && result > 0) {
 			for(MultipartFile mf : files) {
 			
 				if(mf.isEmpty()) {
@@ -43,7 +47,12 @@ public class BoardService {
 				boardFilesVO.setOriName(mf.getOriginalFilename());
 				
 				boardMapper.setFileAdd(boardFilesVO);
+				
+				if(result < 1) {
+					throw new SQLException();
+				}
 			}
+			
 		}
 		
 		
@@ -73,6 +82,19 @@ public class BoardService {
 	
 	public BoardFilesVO getFileDetail(BoardFilesVO boardFilesVO) throws Exception {
 		return boardMapper.getFileDetail(boardFilesVO);
+	}
+	
+	public String setSummerFileUpload(MultipartFile files) throws Exception {
+		
+		String fileName = fileManager.fileSave(files, "resources/upload/board/");
+		fileName = "/resources/upload/board/"+fileName;
+		return fileName;
+	}
+	
+	public boolean setSummerFileDelete(String fileName) throws Exception {
+		fileName = fileName.substring(fileName.lastIndexOf("/")+1);
+		System.out.println(fileName);
+		return fileManager.remove("resources/upload/board/", fileName);
 	}
 	
 }

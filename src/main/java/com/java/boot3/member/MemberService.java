@@ -18,6 +18,7 @@ public class MemberService {
 	//회원가입
 	public int setAdd(MemberVO memberVO, MultipartFile mf) throws Exception {
 		int result = memberMapper.setAdd(memberVO);
+		result = memberMapper.setMemberRole(memberVO);
 		
 		String fileName = fileManager.fileSave(mf, "resources/upload/member/");
 		System.out.println(fileName);

@@ -93,5 +93,23 @@ public class BoardController {
 		mv.setViewName("fileDown");
 		return mv;
 	}
+	
+	@PostMapping("summerFileUpload")
+	public ModelAndView setSummerFileUpload(MultipartFile files) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		String fileName = boardService.setSummerFileUpload(files);
+		mv.addObject("result", fileName);
+		mv.setViewName("common/addResult");
+		return mv;
+	}
+	
+	@GetMapping("summerFileDelete")
+	public ModelAndView setSummerFileDelete(String fileName) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		boolean result = boardService.setSummerFileDelete(fileName);
+		mv.addObject("result", result);
+		mv.setViewName("common/addResult");
+		return mv;
+	}
 
 }

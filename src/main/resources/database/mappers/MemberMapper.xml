@@ -49,4 +49,9 @@
 	<delete id="setDelete" parameterType="MemberVO">
 		DELETE FROM MEMBER WHERE ID=#{id}
 	</delete>
+	
+	<insert id="setMemberRole" parameterType="MemberVO">
+		INSERT INTO MEMBERROLE (ID, ROLEID)
+		VALUES (#{id}, 1)
+	</insert>
 </mapper>
