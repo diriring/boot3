@@ -54,7 +54,7 @@
 						</c:otherwise>
 					</c:choose>
 				  <div class="card-body">
-				    <h5 class="card-title">${vo.productName}</h5>
+				    <h5 class="card-title"><a href="./detail?productNum=${vo.productNum}">${vo.productName}</a></h5>
 				    <h5 class="card-title">${vo.productPrice}원</h5>
 				    <p class="card-text">${vo.productDetail}</p>
 				    <a href="#" class="btn btn-primary">Detail View</a>

@@ -16,26 +16,19 @@
 <c:import url="../temp/header.jsp"></c:import>
 
 <div class="container">
-	<div class="row mt-5">
-		<c:import url="../common/ajaxList.jsp"></c:import>
-		<form action="./manage" id="frm">
-			<input type="hidden" name="pn" id="pn" value="${pager.pn}">
-		</form>
-	 	
-		<div class="d-grid justify-content-end">
-			<a href="./add" class="btn btn-outline-primary">ADD</a>
-		</div>
-
+<h1>Manage Detail Page</h1>
+	<div class="row">
+		<ul class="list-group">
+			<li class="list-group-item">${vo.productName}</li>
+			<li class="list-group-item">${vo.productPrice}</li>
+			<li class="list-group-item">${vo.productDetail}</li>
+		</ul>
+		<c:forEach items="${vo.productFilesVO}" var="file">
+			<img alt="" src="/resources/upload/product/${file.fileName}">
+		</c:forEach>
 	</div>
 </div>
 
 <c:import url="../temp/header_script.jsp"></c:import>
-<script type="text/javascript">
-	$(".pager").click(function() {
-		let pn = $(this).attr("data-pn");
-		$("#pn").val(pn);
-		$("#frm").submit();
-	});
-</script>
 </body>
 </html>

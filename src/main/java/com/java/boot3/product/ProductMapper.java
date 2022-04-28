@@ -11,6 +11,8 @@ public interface ProductMapper {
 
 	public List<ProductVO> getList(Pager pager) throws Exception;
 	
+	public ProductVO getDetail(ProductVO productVO) throws Exception;
+	
 	public int setAdd(ProductVO productVO) throws Exception;
 	
 	public int setFileAdd(ProductFilesVO productFilesVO) throws Exception;

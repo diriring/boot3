@@ -26,6 +26,10 @@ public class ProductService {
 		return ar;
 	}
 	
+	public ProductVO getDetail(ProductVO productVO) throws Exception {
+		return productMapper.getDetail(productVO);
+	}
+	
 	public int setAdd(ProductVO productVO, MultipartFile [] files) throws Exception {
 		int result = productMapper.setAdd(productVO);
 		if(files != null) {

@@ -31,7 +31,7 @@
 			  <span class="input-group-text" id="basic-addon1">글 제목</span>
 			  <input type="text" name="title" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
 			  <span class="input-group-text" id="basic-addon1">작성자</span>
-			  <input type="text" name="writer" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+			  <input type="text" name="writer" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="${member.id}" readonly="readonly">
 			</div>
 		</div>
 		<div class="row">

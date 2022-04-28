@@ -6,8 +6,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.java.boot3.Interceptor.AdminInterceptor;
-import com.java.boot3.Interceptor.LoginInterceptor;
+import com.java.boot3.Interceptor.BoardInterceptor;
 import com.java.boot3.Interceptor.SellerInterceptor;
+import com.java.boot3.Interceptor.WriterCheckIntercptor;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
@@ -17,7 +18,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	@Autowired
 	private AdminInterceptor adminInterceptor;
 	@Autowired
-	private LoginInterceptor loginInterceptor;
+	private BoardInterceptor boardInterceptor;
+	@Autowired
+	private WriterCheckIntercptor writerCheckIntercptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -33,9 +36,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		registry.addInterceptor(adminInterceptor)
 				.addPathPatterns("/admin/manage");
 		
-		registry.addInterceptor(loginInterceptor)
+		registry.addInterceptor(boardInterceptor)
 				.addPathPatterns("/board/*")
-				.excludePathPatterns("/board/list");
+				.excludePathPatterns("/board/list");	
+		
+		registry.addInterceptor(writerCheckIntercptor)
+				.addPathPatterns("/board/update")
+				.addPathPatterns("/board/delete");
 		
 //		WebMvcConfigurer.super.addInterceptors(registry);
 	}

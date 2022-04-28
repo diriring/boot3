@@ -50,6 +50,22 @@
 			  <textarea class="form-control" id="productDetail" name="productDetail"></textarea>
 			</div>
 		</div>
+		
+		<div class="row mb-3">
+			<div class="form-check">
+			  <input class="form-check-input sale" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="1">
+			  <label class="form-check-label sale" for="flexRadioDefault1">
+			    판매
+			  </label>
+			</div>
+			<div class="form-check">
+			  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="0" checked>
+			  <label class="form-check-label" for="flexRadioDefault2">
+			    판매중지
+			  </label>
+			</div>
+		</div>
+		
 		<button id="fileAdd" type="button" class="btn btn-dark my-4">FileADD</button>
 		<div class="row">
 			<div id="fileResult"></div>
@@ -88,22 +104,29 @@
 	});
 	
 	$("#addBtn").click(function() {
-		
-/* 		let formData = new FormData($("#addForm")[0]); */
-
 		let formData = new FormData();
-
-   		formData.append('productName', $("#productName").val());
-		formData.append('productPrice', $("#productPrice").val());
-		formData.append('productCount', $("#productCount").val());
-		formData.append('productDetail', $("#productDetail").val());
-		//productDetail: $("#productDetail").summernote("code")
+		let productName = $("#productName").val();
+		let productPrice = $("#productPrice").val();
+		let productCount = $("#productCount").val();
+		let productDetail = $("#productDetail").summernote("code"); //$("#productDetail").val();
 		$(".files").each(function(idx, item) {
-			if(item.files.length>0) {
-				formData.append('files', item.files[0]);
-				//input 태그의 file List의 첫번째 항목이 file 정보	
+			if(item.files.length>0){
+				//formData.append("파라미터명", 값);
+				formData.append("files", item.files[0]);
+			}
+		});//each 끝
+		let sale=0;
+		$(".sale").each(function(idx, item) {
+			if($(item).prop("checked")) {
+				sale=$(item).val();
 			}
 		});
+		formData.append("sale", sale);
+		formData.append("productName", productName);
+		formData.append("productPrice", productPrice);
+		formData.append("productCount", productCount);
+		formData.append("productDetail", productDetail);
+ 		
 		$.ajax({
 			type: "POST",
 			url: "./add",

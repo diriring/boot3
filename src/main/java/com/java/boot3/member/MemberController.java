@@ -54,7 +54,7 @@ public class MemberController {
 		memberVO = memberService.getLogin(memberVO);
 		
 		String message="Login Fail";
-		String path="redirect:../";
+		String path="./login";
 		
 		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
