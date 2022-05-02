@@ -47,6 +47,10 @@
 		WHERE P.PRODUCTNUM = #{productNum}
 	</select>
 	
+	<select id="getFileDetail" parameterType="ProductFilesVO" resultType="ProductFilesVO">
+		SELECT * FROM PRODUCTFILES WHERE FILENUM=#{fileNum}
+	</select>
+	
 	<insert id="setAdd" parameterType="ProductVO" useGeneratedKeys="true" keyProperty="productNum">
 		INSERT INTO PRODUCT
 		(PRODUCTNUM, PRODUCTNAME, PRODUCTPRICE, PRODUCTCOUNT, PRODUCTDETAIL, ID, SALE)
@@ -57,6 +61,20 @@
 		INSERT INTO PRODUCTFILES (FILENUM, PRODUCTNUM, FILENAME, ORINAME)
 		VALUES (NULL, #{productNum}, #{fileName}, #{oriName})
 	</insert>
+	
+	<delete id="setFileDelete" parameterType="ProductFilesVO">
+		DELETE FROM PRODUCTFILES WHERE FILENUM=#{fileNum}
+	</delete>
+	
+	<update id="setUpdate" parameterType="ProductVO">
+		UPDATE PRODUCT SET
+			PRODUCTNAME=#{productName},
+			PRODUCTPRICE=#{productPrice},
+			PRODUCTCOUNT=#{productCount},
+			PRODUCTDETAIL=#{productDetail},
+			SALE=#{sale}
+		WHERE PRODUCTNUM=#{productNum}
+	</update>
 	
 	<select id="totalCount" parameterType="Pager" resultType="Long">
 		SELECT COUNT(PRODUCTNUM) FROM PRODUCT

@@ -1,5 +1,6 @@
 package com.java.boot3.board;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.java.boot3.product.ProductFilesVO;
 import com.java.boot3.util.Pager;
 
 @Controller
@@ -71,9 +73,17 @@ public class BoardController {
 	}
 	
 	@PostMapping("update")
-	public String setUpdate(BoardVO boardVO) throws Exception {
-		int result = boardService.setUpdate(boardVO);
-		return "redirect:./list";
+	public ModelAndView setUpdate(BoardVO boardVO, MultipartFile [] files) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		int result = boardService.setUpdate(boardVO, files);
+		if(result > 0) {	
+			mv.setViewName("redirect:./list");
+		}else {
+			mv.setViewName("common/result");
+			mv.addObject("message", "update 실패");
+			mv.addObject("path", "./detail?num"+boardVO.getNum());
+		}
+		return mv; //"redirect:./list";
 	}
 	
 	@GetMapping("delete")
@@ -91,6 +101,16 @@ public class BoardController {
 		mv.addObject("fileVO", boardFilesVO);
 		//Bean(클래스) 이름과 동일하게
 		mv.setViewName("fileDown");
+		return mv;
+	}
+	
+	@PostMapping("fileDelete")
+	public ModelAndView setFileDelete(BoardFilesVO boardFilesVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+//		System.out.println(productFilesVO.getFileNum());
+		int result = boardService.setFileDelete(boardFilesVO);
+		mv.addObject("result", result);
+		mv.setViewName("common/addResult");
 		return mv;
 	}
 	

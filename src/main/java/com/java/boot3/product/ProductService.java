@@ -56,4 +56,54 @@ public class ProductService {
 		return result;
 	}
 	
+	public int setUpdate(ProductVO productVO, MultipartFile [] files) throws Exception {
+		int result = productMapper.setUpdate(productVO);
+		if(files != null) {
+			for(MultipartFile mf : files) {
+			
+				if(mf.isEmpty()) {
+					continue;
+				}
+				
+				// File을 HDD에 저장
+				String fileName = fileManager.fileSave(mf, "resources/upload/product/");
+				System.out.println(fileName);
+				// 저장된 정보를 DB에 저장
+				ProductFilesVO productFilesVO = new ProductFilesVO();
+				productFilesVO.setProductNum(productVO.getProductNum());
+				productFilesVO.setFileName(fileName);
+				productFilesVO.setOriName(mf.getOriginalFilename());
+				
+				productMapper.setFileAdd(productFilesVO);
+			}
+		}
+		return result;
+	}
+	
+	public int setFileDelete(ProductFilesVO productFilesVO) throws Exception {
+		productFilesVO = productMapper.getFileDetail(productFilesVO);
+		
+		//db 삭제
+		int result = productMapper.setFileDelete(productFilesVO);
+		
+		//hdd 삭제
+		if(result > 0) {
+			boolean check = fileManager.remove("/resources/upload/product/", productFilesVO.getFileName());
+		}
+		return result;
+	}
+	
+	public String setSummerFileUpload(MultipartFile files) throws Exception {
+		
+		String fileName = fileManager.fileSave(files, "resources/upload/product/");
+		fileName = "/resources/upload/product/"+fileName;
+		return fileName;
+	}
+	
+	public boolean setSummerFileDelete(String fileName) throws Exception {
+		fileName = fileName.substring(fileName.lastIndexOf("/")+1);
+		System.out.println(fileName);
+		return fileManager.remove("resources/upload/product/", fileName);
+	}
+	
 }

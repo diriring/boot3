@@ -18,14 +18,7 @@
 <div class="container">
 <h1>Product Detail Page</h1>
 	<div class="row">
-		<ul class="list-group">
-			<li class="list-group-item">${vo.productName}</li>
-			<li class="list-group-item">${vo.productPrice}</li>
-			<li class="list-group-item">${vo.productDetail}</li>
-		</ul>
-		<c:forEach items="${vo.productFilesVO}" var="file">
-			<img alt="" src="/resources/upload/product/${file.fileName}">
-		</c:forEach>
+		<c:import url="../temp/detail.jsp"></c:import>
 	</div>
 </div>
 

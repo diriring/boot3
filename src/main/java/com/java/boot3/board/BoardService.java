@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.java.boot3.member.MemberFilesVO;
+import com.java.boot3.product.ProductFilesVO;
 import com.java.boot3.util.FileManager;
 import com.java.boot3.util.Pager;
 
@@ -64,8 +65,28 @@ public class BoardService {
 		return boardMapper.getDetail(boardVO);
 	}
 
-	public int setUpdate(BoardVO boardVO) throws Exception {
-		return boardMapper.setUpdate(boardVO);
+	public int setUpdate(BoardVO boardVO, MultipartFile [] files) throws Exception {
+		int result = boardMapper.setUpdate(boardVO);
+		if(files != null) {
+			for(MultipartFile mf : files) {
+			
+				if(mf.isEmpty()) {
+					continue;
+				}
+				
+				// File을 HDD에 저장
+				String fileName = fileManager.fileSave(mf, "/resources/upload/board/");
+				System.out.println(fileName);
+				// 저장된 정보를 DB에 저장
+				BoardFilesVO boardFilesVO = new BoardFilesVO();
+				boardFilesVO.setNum(boardVO.getNum());
+				boardFilesVO.setFileName(fileName);
+				boardFilesVO.setOriName(mf.getOriginalFilename());
+				
+				boardMapper.setFileAdd(boardFilesVO);
+			}
+		}
+		return result;
 	}
 
 	public int setDelete(BoardVO boardVO) throws Exception {
@@ -82,6 +103,19 @@ public class BoardService {
 	
 	public BoardFilesVO getFileDetail(BoardFilesVO boardFilesVO) throws Exception {
 		return boardMapper.getFileDetail(boardFilesVO);
+	}
+	
+	public int setFileDelete(BoardFilesVO boardFilesVO) throws Exception {
+		boardFilesVO = boardMapper.getFileDetail(boardFilesVO);
+		
+		//db 삭제
+		int result = boardMapper.setFileDelete(boardFilesVO);
+		
+		//hdd 삭제
+		if(result > 0) {
+			boolean check = fileManager.remove("/resources/upload/board/", boardFilesVO.getFileName());
+		}
+		return result;
 	}
 	
 	public String setSummerFileUpload(MultipartFile files) throws Exception {

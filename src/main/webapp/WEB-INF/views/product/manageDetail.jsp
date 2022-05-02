@@ -18,16 +18,15 @@
 <div class="container">
 <h1>Manage Detail Page</h1>
 	<div class="row">
-		<ul class="list-group">
-			<li class="list-group-item">${vo.productName}</li>
-			<li class="list-group-item">${vo.productPrice}</li>
-			<li class="list-group-item">${vo.productDetail}</li>
-		</ul>
-		<c:forEach items="${vo.productFilesVO}" var="file">
-			<img alt="" src="/resources/upload/product/${file.fileName}">
-		</c:forEach>
+		<c:import url="../temp/detail.jsp"></c:import>
+	</div>
+	<div class="row mt-3">
+		<div class="d-flex justify-content-end">
+			<a href="./update?productNum=${vo.productNum}" class="btn btn-outline-primary">UPDATE</a>
+		</div>
 	</div>
 </div>
+
 
 <c:import url="../temp/header_script.jsp"></c:import>
 </body>

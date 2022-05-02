@@ -60,6 +60,32 @@ public class ProductController {
 		return mv;
 	}
 	
+	@GetMapping("update")
+	public ModelAndView setUpdate(ProductVO productVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		productVO = productService.getDetail(productVO);
+		mv.addObject("vo", productVO);
+		mv.setViewName("product/update");
+		
+		return mv;
+	}
+	
+	@PostMapping("update")
+	public ModelAndView setUpdate(ProductVO productVO, ModelAndView mv, MultipartFile [] files) throws Exception {		
+		int result = productService.setUpdate(productVO, files);
+		
+		if(result > 0) {	
+			mv.setViewName("redirect:./manage");
+		}else {
+			mv.setViewName("common/result");
+			mv.addObject("message", "update 실패");
+			mv.addObject("path", "./manageDetail?productNum"+productVO.getProductNum());
+		}
+		
+		return mv;
+	}
+	
 	@GetMapping("ajaxList")
 	public ModelAndView getAjaxList(Pager pager, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -111,6 +137,34 @@ public class ProductController {
 		mv.addObject("vo", productVO);
 		
 		mv.setViewName("product/manageDetail");
+		return mv;
+	}
+	
+	@PostMapping("fileDelete")
+	public ModelAndView setFileDelete(ProductFilesVO productFilesVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+//		System.out.println(productFilesVO.getFileNum());
+		int result = productService.setFileDelete(productFilesVO);
+		mv.addObject("result", result);
+		mv.setViewName("common/addResult");
+		return mv;
+	}
+	
+	@PostMapping("summerFileUpload")
+	public ModelAndView setSummerFileUpload(MultipartFile files) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		String fileName = productService.setSummerFileUpload(files);
+		mv.addObject("result", fileName);
+		mv.setViewName("common/addResult");
+		return mv;
+	}
+	
+	@GetMapping("summerFileDelete")
+	public ModelAndView setSummerFileDelete(String fileName) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		boolean result = productService.setSummerFileDelete(fileName);
+		mv.addObject("result", result);
+		mv.setViewName("common/addResult");
 		return mv;
 	}
 

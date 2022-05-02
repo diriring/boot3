@@ -10,6 +10,10 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<c:import url="../temp/header_script.jsp"></c:import>
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -17,7 +21,7 @@
 <c:import url="../temp/header.jsp"></c:import>
 
 <div class="container mt-5">
-	<form action="./update" method="post">
+	<form action="./update" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="num" value="${vo.num}">
 		<div class="row">
 			<div class="alert alert-primary" role="alert">
@@ -33,8 +37,17 @@
 		<div class="row">
 			<div class="input-group">
 			  <span class="input-group-text">글 내용</span>
-			  <textarea name="contents" class="form-control" aria-label="With textarea">${vo.contents}</textarea>
+			  <textarea id="contents" name="contents" class="form-control" aria-label="With textarea"></textarea>
 			</div>
+		</div>
+		<button id="fileAdd" type="button" class="btn btn-dark my-4">FileADD</button>
+		<div class="row">
+			<c:forEach items="${vo.filesVOs}" var="fileVO">
+				<h4>${fileVO.oriName}<button type="button" class="del" data-num="${fileVO.fileNum}">DELETE</button></h4>
+			</c:forEach>
+			<div id="fileResult"></div>
+			<!-- <input type="file" class="form-control" name="files">
+			<input type="file" class="form-control" name="files"> -->
 		</div>
 		<div class="row">
 			<div class="row justify-content-end">
@@ -44,7 +57,12 @@
 	</form>
 </div>
 
- <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../resources/js/fileAdd.js"></script>
+<script type="text/javascript" src="../js/summernote.js"></script>
+<script type="text/javascript">
+ 	summernoteInit("contents", '${vo.contents}');
+	fileAddInit(${vo.filesVOs.size()});
+	fileDeleteInit();
+</script> 
 </body>
 </html>

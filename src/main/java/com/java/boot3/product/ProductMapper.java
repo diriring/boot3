@@ -13,9 +13,15 @@ public interface ProductMapper {
 	
 	public ProductVO getDetail(ProductVO productVO) throws Exception;
 	
+	public ProductFilesVO getFileDetail(ProductFilesVO productFilesVO) throws Exception;
+	
 	public int setAdd(ProductVO productVO) throws Exception;
 	
 	public int setFileAdd(ProductFilesVO productFilesVO) throws Exception;
+	
+	public int setFileDelete(ProductFilesVO productFilesVO) throws Exception;
+	
+	public int setUpdate(ProductVO productVO) throws Exception;
 	
 	public Long totalCount(Pager pager) throws Exception;
 	

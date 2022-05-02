@@ -10,7 +10,11 @@
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+<style type="text/css">
+	.detail {
+		cursor: pointer;
+	}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -44,7 +48,7 @@
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex align-items-center">
 		<c:forEach items="${list}" var="vo">
 			<div class="col">
-				<div class="card justify-content-center">
+				<div class="card detail justify-content-center" data-num="${vo.productNum}">
 					<c:choose>
 						<c:when test="${empty vo.productFilesVO}">
 							<img src="/resources/upload/product/no-image.png" class="card-img-top" alt="...">
@@ -54,10 +58,9 @@
 						</c:otherwise>
 					</c:choose>
 				  <div class="card-body">
-				    <h5 class="card-title"><a href="./detail?productNum=${vo.productNum}">${vo.productName}</a></h5>
+				    <h5 class="card-title">${vo.productName}</h5>
 				    <h5 class="card-title">${vo.productPrice}원</h5>
 				    <p class="card-text">${vo.productDetail}</p>
-				    <a href="#" class="btn btn-primary">Detail View</a>
 				  </div>
 				</div>
 			</div>
@@ -103,5 +106,11 @@
 </div>
 
 <c:import url="../temp/header_script.jsp"></c:import>
+<script type="text/javascript">
+	$(".detail").click(function() {
+		let num = $(this).attr("data-num");
+		location.href="./detail?productNum="+num;
+	});
+</script>
 </body>
 </html>
