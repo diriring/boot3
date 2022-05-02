@@ -70,5 +70,9 @@ public class MemberService {
 	public int setUpdate(MemberVO memberVO) throws Exception {
 		return memberMapper.setUpdate(memberVO);
 	}
+	
+	public MemberVO getFindId(MemberVO memberVO) throws Exception {
+		return memberMapper.getFindId(memberVO);
+	}
 
 }

@@ -22,4 +22,6 @@ public interface MemberMapper {
 	public int setFileAdd(MemberFilesVO memberFilesVO) throws Exception;
 	//파일조회
 	public MemberFilesVO getFileDetail(MemberVO memberVO) throws Exception;
+	
+	public MemberVO getFindId(MemberVO memberVO) throws Exception;
 }

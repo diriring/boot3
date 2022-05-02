@@ -69,4 +69,8 @@
 		(SELECT ROLEID FROM ROLE WHERE ROLENAME = #{roleName})
 		)
 	</insert>
+	
+	<select id="getFindId" parameterType="MemberVO" resultType="MemberVO">
+		SELECT ID FROM MEMBER WHERE EMAIL=#{email}
+	</select>
 </mapper>

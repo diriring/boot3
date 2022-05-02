@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,8 +35,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("login")
-	public void getLogin() throws Exception {
-		
+	public ModelAndView getLogin(@ModelAttribute MemberVO memberVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		//mv.addObject("vo", new MemberVO());
+		mv.setViewName("member/login");
+		return mv;
 	}
 	
 	@PostMapping("login")
@@ -139,6 +143,22 @@ public class MemberController {
 		mv.addObject("message",message);
 		mv.addObject("path",path);
 		mv.setViewName("common/result");
+		
+		return mv;
+	}
+	
+	@GetMapping("findId")
+	public void findId() throws Exception {
+		
+	}
+	
+	@PostMapping("findId")
+	public ModelAndView getFindId(MemberVO memberVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		memberVO = memberService.getFindId(memberVO);
+		mv.addObject("vo", memberVO);
+		mv.setViewName("member/findIdResult");
 		
 		return mv;
 	}
