@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.java.boot3.util.FileManager;
@@ -73,6 +74,26 @@ public class MemberService {
 	
 	public MemberVO getFindId(MemberVO memberVO) throws Exception {
 		return memberMapper.getFindId(memberVO);
+	}
+	
+	//사용자 정의 검증 메서드 선언
+	public boolean memberError(MemberVO memberVO, BindingResult bindingResult) throws Exception {
+		boolean check=false;
+		//check가 false면 검증 성공 (error x)
+		//check가 true면 검증 실패 (error o)
+		
+		//1. annotation 기본 검증 결과
+		check = bindingResult.hasErrors();
+		
+		//2. pw 일치 여부 수동 검증
+		if(!memberVO.getPw().equals(memberVO.getCheckPw())) {
+			check=true;
+			bindingResult.rejectValue("checkPw", "member.password.notEqual");
+		}else if(memberMapper.getIdCount(memberVO)==1) {
+			check=true;
+			bindingResult.rejectValue("id", "member.id.cannotUse");
+		}
+		return check;
 	}
 
 }

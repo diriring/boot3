@@ -3,9 +3,11 @@ package com.java.boot3.member;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +23,27 @@ public class MemberController {
 	private MemberService memberService;
 
 	@GetMapping("join")
-	public void setAdd() throws Exception {
+	public ModelAndView setAdd(@ModelAttribute MemberVO memberVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("member/join");
+		return mv;
 	}
 	
 	@PostMapping("join")
-	public ModelAndView setAdd(MemberVO memberVO, MultipartFile mf) throws Exception {
+	public ModelAndView setAdd(@Valid MemberVO memberVO, BindingResult bindingResult,MultipartFile mf) throws Exception {
 		ModelAndView mv = new ModelAndView();
+		
+//		if(bindingResult.hasErrors()) {
+//			mv.setViewName("member/join");
+//			return mv;
+//		}
+		
+		//사용자 정의 검증 메서드 호출
+		if(memberService.memberError(memberVO, bindingResult)) {
+			mv.setViewName("member/join");
+			return mv;
+		}
+		
 		
 		int result = memberService.setAdd(memberVO, mf);
 		mv.setViewName("redirect:../");
@@ -57,19 +74,13 @@ public class MemberController {
 		
 		memberVO = memberService.getLogin(memberVO);
 		
-		String message="Login Fail";
-		String path="./login";
+		mv.setViewName("member/login");
 		
 		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
-			message="Login Success";
-			path="../";
+			mv.setViewName("redirect:../");
 		}
-		
-		mv.addObject("message",message);
-		mv.addObject("path",path);
-		mv.setViewName("common/result");
-	
+
 		return mv;
 	}
 	

@@ -73,4 +73,8 @@
 	<select id="getFindId" parameterType="MemberVO" resultType="MemberVO">
 		SELECT ID FROM MEMBER WHERE EMAIL=#{email}
 	</select>
+	
+	<select id="getIdCount" parameterType="MemberVO" resultType="int">
+		SELECT COUNT(ID) FROM MEMBER WHERE ID=#{id}
+	</select>
 </mapper>

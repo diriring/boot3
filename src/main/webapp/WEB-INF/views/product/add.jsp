@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,8 @@
 <c:import url="../temp/header.jsp"></c:import>
 
 <div class="container mt-5">
-	<form action="./add" method="post" id="addForm" enctype="multipart/form-data">
+	<%-- <form action="./add" method="post" id="addForm" enctype="multipart/form-data"> --%>
+	<form:form modelAttribute="productVO" method="post" enctype="multipart/form-data">
 		<div class="row">
 			<div class="alert alert-primary" role="alert">
 			 	<h4 style="text-transform: capitalize;">${board} Add</h4>
@@ -35,34 +37,55 @@
 			
 			<div class="input-group mb-3">
 			  <span class="input-group-text" id="basic-addon1">상품명</span>
-			  <input type="text" id="productName" name="productName" class="form-control" placeholder="상품명">
+			  <!-- <input type="text" id="productName" name="productName" class="form-control" placeholder="상품명"> -->
+			  <form:input path="productName" cssClass="form-control" placeholder="상품명"/>
+			</div>
+			<div>
+				<form:errors path="productName"></form:errors>
 			</div>
 			<div class="input-group mb-3">
 			  <span class="input-group-text" id="basic-addon1">가격</span>
-			  <input type="text" id="productPrice" name="productPrice" class="form-control" placeholder="가격">
+			  <!-- <input type="text" id="productPrice" name="productPrice" class="form-control" placeholder="가격"> -->
+			  <form:input path="productPrice" cssClass="form-control" placeholder="가격"/>
+			</div>
+			<div>
+				<form:errors path="productPrice"></form:errors>
 			</div>
 			<div class="input-group mb-3">
 			  <span class="input-group-text" id="basic-addon1">수량</span>
-			  <input type="text" id="productCount" name="productCount" class="form-control" placeholder="수량">
+			  <!-- <input type="text" id="productCount" name="productCount" class="form-control" placeholder="수량"> -->
+			  <form:input path="productCount" cssClass="form-control" placeholder="수량"/>
+			</div>
+			<div>
+				<form:errors path="productCount"></form:errors>
 			</div>
 			<div class="input-group mb-3">
 			  <span class="input-group-text" id="basic-addon1">상세설명</span>
-			  <textarea class="form-control" id="productDetail" name="productDetail"></textarea>
+			  <!-- <textarea class="form-control" id="productDetail" name="productDetail"></textarea> -->
+			  <form:textarea path="productDetail" id="productDetail" cssClass="form-control"/>
+			</div>
+			<div>
+				<form:errors path="productDetail"></form:errors>
 			</div>
 		</div>
 		
 		<div class="row mb-3">
 			<div class="form-check">
-			  <input class="form-check-input sale" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="1">
-			  <label class="form-check-label sale" for="flexRadioDefault1">
+			  <!-- <input class="form-check-input sale" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="1"> -->
+			  <form:radiobutton path="sale" cssClass="form-check-input" id="sale1" value="1"/>
+			  <label class="form-check-label" for="sale1">
 			    판매
 			  </label>
 			</div>
 			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="0" checked>
-			  <label class="form-check-label" for="flexRadioDefault2">
+			  <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="0" checked> -->
+			  <form:radiobutton path="sale" cssClass="form-check-input" id="sale0" value="0"/>
+			  <label class="form-check-label" for="sale0">
 			    판매중지
 			  </label>
+			</div>
+			<div>
+				<form:errors path="sale"></form:errors>
 			</div>
 		</div>
 		
@@ -72,8 +95,9 @@
 			<!-- <input type="file" class="form-control" name="files">
 			<input type="file" class="form-control" name="files"> -->
 		</div>
-		<button type="button" class="btn btn-outline-primary my-4" id="addBtn">INSERT</button>
-	</form>
+		<button type="submit" class="btn btn-outline-primary my-4" id="addBtn2">INSERT</button>
+	</form:form>
+	<%-- </form> --%>
 </div>
 
 <script type="text/javascript" src="../resources/js/fileAdd.js"></script>

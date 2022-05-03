@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,33 +25,60 @@
 			</div>
 		</div>
 		<div class="row mt-5">
-			<form action="./join" method="post" enctype="multipart/form-data">
+			<form:form modelAttribute="memberVO" method="post" enctype="multipart/form-data">
+			<%-- <form action="./join" method="post" enctype="multipart/form-data"> --%>
 				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">ID</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" name="id" placeholder="User ID">
+					<label for="id" class="form-label">ID</label>
+					<form:input path="id" cssClass="form-control" id="id" placeholder="User ID"/>
+					<!-- <input type="text" class="form-control" id="exampleFormControlInput1" name="id" placeholder="User ID"> -->
+					<div>
+						<form:errors path="id"></form:errors>
+					</div>
 				</div>
 				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">Password</label>
-					<input type="password" class="form-control" id="exampleFormControlInput2" name="pw" placeholder="User Password">
+					<label for="pw" class="form-label">Password</label>
+					<form:password path="pw" cssClass="form-control" id="pw" placeholder="User Password"/>
+					<!-- <input type="password" class="form-control" id="exampleFormControlInput2" name="pw" placeholder="User Password"> -->
+					<div>
+						<form:errors path="pw"></form:errors>
+					</div>
 				</div>
 				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">Name</label>
-					<input type="text" class="form-control" id="exampleFormControlInput3" name="name" placeholder="Name">
+					<label for="checkPw" class="form-label">Password Check</label>
+					<form:password path="checkPw" cssClass="form-control" id="checkPw" placeholder="Password Check"/>
+					<!-- <input type="password" class="form-control" id="exampleFormControlInput2" name="pw" placeholder="User Password"> -->
+					<div>
+						<form:errors path="checkPw"></form:errors>
+					</div>
 				</div>
 				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">Email address</label>
-					<input type="email" class="form-control" id="exampleFormControlInput4" name="email" placeholder="name@example.com">
+					<label for="name" class="form-label">Name</label>
+					<form:input path="name" cssClass="form-control" id="name" placeholder="Name"/>
+					<!-- <input type="text" class="form-control" id="exampleFormControlInput3" name="name" placeholder="Name"> -->
+					<div>
+						<form:errors path="name"></form:errors>
+					</div>
 				</div>
 				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">Phone Number</label>
-					<input type="text" class="form-control" id="exampleFormControlInput5" name="phone" placeholder="010-@@@@-@@@@">
+					<label for="email" class="form-label">Email address</label>
+					<form:input path="email" cssClass="form-control" id="email" placeholder="name@example.com"/>
+					<!-- <input type="email" class="form-control" id="exampleFormControlInput4" name="email" placeholder="name@example.com"> -->
+					<div>
+						<form:errors path="email"></form:errors>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="phone" class="form-label">Phone Number</label>
+					<form:input path="phone" cssClass="form-control" id="phone" placeholder="010-####-####"/>
+					<!-- <input type="text" class="form-control" id="exampleFormControlInput5" name="phone" placeholder="010-@@@@-@@@@"> -->
 				</div>
 				<div class="mb-3">
 					<label for="formFile" class="form-label">Profile Picture</label>
 					<input class="form-control" type="file" id="formFile" name="mf">
 				</div>
 				<button type="submit" class="btn btn-primary">JOIN!</button>
-			</form>
+			<%-- </form> --%>
+			</form:form>
 		</div>
 		<div class="row">
 			<div class="form-check">

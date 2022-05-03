@@ -24,4 +24,6 @@ public interface MemberMapper {
 	public MemberFilesVO getFileDetail(MemberVO memberVO) throws Exception;
 	
 	public MemberVO getFindId(MemberVO memberVO) throws Exception;
+	
+	public int getIdCount(MemberVO memberVO) throws Exception;
 }
