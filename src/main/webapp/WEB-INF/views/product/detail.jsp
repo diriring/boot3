@@ -19,6 +19,7 @@
 <div class="container">
 <h1>Product Detail Page</h1>
 	<div class="row">
+		<button type="button" id="cart" data-pn="${vo.productNum}" class="btn btn-outline-primary my-4">장바구니</button>
 		<c:import url="../temp/detail.jsp"></c:import>
 	</div>
 </div>
@@ -27,5 +28,6 @@
 </div>
 
 <c:import url="../temp/header_script.jsp"></c:import>
+<script type="text/javascript" src="../resources/js/cart.js"></script>
 </body>
 </html>
